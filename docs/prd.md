@@ -4,17 +4,14 @@
 Build a production-ready, beautifully designed Expense Tracker application using the MERN stack (MongoDB, Express.js, React.js with Vite, Node.js) with complete financial management functionality.
 
 ## 2. Core Features
-
-### 2.1 User Authentication & Authorization
+\n### 2.1 User Authentication & Authorization
 - JWT-based authentication (access token + refresh token)
 - Secure signup/login with password hashing (bcrypt)
 - Protected routes for authenticated users only
 - Email verification during signup (optional but recommended)
 - Forgot password functionality with email reset link
 
-### 2.2 Dashboard
-- Summary cards showing:
-  - Total balance (income - expenses)
+### 2.2 Dashboard\n- Summary cards showing:\n  - Total balance (income - expenses)
   - Total income (current month)
   - Total expenses (current month)
   - Net savings rate
@@ -28,8 +25,7 @@ Build a production-ready, beautifully designed Expense Tracker application using
 - Category dropdown with icons (Food, Transportation, Shopping, Healthcare, etc.)
 - Recurring transaction option (daily, weekly, monthly)
 - Receipt/image upload (cloud or local storage)
-
-**View Transactions:**
+\n**View Transactions:**
 - Filter by: date range, category, type, amount range
 - Sort by: date, amount (asc/desc)
 - Search by description
@@ -48,19 +44,17 @@ Build a production-ready, beautifully designed Expense Tracker application using
 - Use Chart.js or Recharts for visualizations
 
 **Report Generation:**
-- Generate PDF reports (using pdfmake or jsPDF)
-- Export to Excel/CSV (using xlsx library)
+- Generate PDF reports (using pdfmake or jsPDF)\n- Export to Excel/CSV (using xlsx library)
 - Custom date range selection for reports
 - Report types: monthly summary, category breakdown, cash flow\n
-**Email Reports:**\n- Scheduled monthly reports via email
+**Email Reports:**
+- Scheduled monthly reports via email
 - Manual report sending option
 - Email template with charts and summary
 
 ### 2.5 User Profile
 - User details (name, email, profile picture)
-- Account settings
-- Currency preference (Indian Rupee₹)
-- Monthly budget setting
+- Account settings\n- Currency preference (Indian Rupee₹)\n- Monthly budget setting
 - Category customization
 - Notification preferences
 - Profile picture upload (cloud storage)
@@ -71,28 +65,29 @@ Build a production-ready, beautifully designed Expense Tracker application using
 - Set monthly budgets per category
 - Budget progress bars with warnings
 - Overspending alerts
-
-**Goals & Savings:**
-- Create saving goals
+\n**Goals & Savings:**
+- Create saving goals with target amount and deadline
 - Track progress toward goals
-- Automatic allocation from income
+- Automatic allocation from FD deposits to linked goals
+- Display saved amount and remaining amount for each goal
+- Progress bar showing completion percentage
+- Update Progress button to manually adjust saved amount
 
 **Notifications:**
 - Browser notifications for large transactions
 - Email alerts for budget limits
-- Weekly spending summary
-
-### 2.7 FD (Fixed Deposit) Module
+- Weekly spending summary\n\n### 2.7 FD (Fixed Deposit) Module
 - Daily deposit amount recording functionality
-- FD account balance display
-- Deposit history query
+- FD account balance display (total of all deposits)
+- Deposit history query with date and amount
 - Deposit statistics and trend analysis
 - Support for editing and deleting deposit records
+- **Automatic linkage to Goals page**: When a deposit is added to FD, it automatically updates the'Saved' amount in the linked saving goal on the Goals page
+- FD deposits contribute to goal progress tracking (e.g., ₹20deposit in FD adds ₹20 to goal's saved amount)
 
 ## 3. Technical Requirements
 
-### 3.1 Backend (Node.js/Express)
-- RESTful API structure
+### 3.1 Backend (Node.js/Express)\n- RESTful API structure
 - MVC architecture\n- MongoDB with Mongoose ODM
 - JWT authentication middleware
 - File upload handling (Multer)
@@ -109,8 +104,7 @@ Build a production-ready, beautifully designed Expense Tracker application using
 - Context API or Redux for state management
 - Axios for API calls
 - Form handling with Formik & Yup validation
-- Responsive design (mobile-first)
-- UI Library: Material-UI or Tailwind CSS
+- Responsive design (mobile-first)\n- UI Library: Material-UI or Tailwind CSS
 - Charting: Chart.js/Recharts
 - File download handling
 - Toast notifications
@@ -118,33 +112,36 @@ Build a production-ready, beautifully designed Expense Tracker application using
 - Dark/light mode toggle
 
 ### 3.3 Database Schema (MongoDB)
-
-**User Collection:**
+\n**User Collection:**
 ```javascript
-{\n  _id,
+{
+  _id,
   name,
-  email,\n  password,
+  email,
+  password,
   avatar,
   currency,
-  createdAt
-}
+  createdAt\n}
 ```
 
 **Transaction Collection:**
 ```javascript
-{\n  _id,
+{
+  _id,
   userId,
-  amount,\n  description,
+  amount,
+  description,
   category,
   type: ['income', 'expense'],
   date,
   paymentMethod,
   recurring: Boolean,
   tags: [String],
-  receipt: String,\n  createdAt
-}\n```
-
-**Category Collection:**
+  receipt: String,
+  createdAt
+}
+```
+\n**Category Collection:**
 ```javascript
 {
   _id,
@@ -153,19 +150,19 @@ Build a production-ready, beautifully designed Expense Tracker application using
   icon,
   color,
   type: ['income', 'expense'],
-  budget: Number
-}
+  budget: Number\n}
 ```
 
 **Budget Collection:**
 ```javascript
-{\n  _id,
+{
+  _id,
   userId,
   categoryId,
-  amount,
-  month,
-  year,\n  spent: Number
-}\n```
+  amount,\n  month,
+  year,
+  spent: Number\n}
+```
 
 **Goal Collection:**
 ```javascript
@@ -175,57 +172,55 @@ Build a production-ready, beautifully designed Expense Tracker application using
   title,
   targetAmount,
   savedAmount,
-  deadline,
-  createdAt\n}
-```
-
+  deadline,\n  linkedToFD: Boolean,
+  createdAt
+}
+```\n
 **FD Collection:**
 ```javascript
-{
-  _id,
+{\n  _id,
   userId,
-  amount,
-  date,
+  amount,\n  date,
   description,
+  linkedGoalId: ObjectId,
   createdAt
 }
 ```
-
-## 4. UI/UX Requirements
+\n## 4. UI/UX Requirements
 - Clean, modern design with intuitive navigation
-- Dashboard with visual metrics
-- Color-coded transactions (red for expenses, green for income)
+- Dashboard with visual metrics\n- Color-coded transactions (red for expenses, green for income)
 - Responsive design for all devices
 - Loading animations and transitions
 - Accessible components (ARIA labels, keyboard navigation)
 - Consistent color scheme throughout
 - Currency symbol unified as Indian Rupee (₹)
-
-## 5. File Structure
-```\nexpense-tracker/\n├── backend/
+- Reference images for UI design:\n  - image.png: Dashboard layout example
+  - image-2.png: Transaction list view
+\n## 5. File Structure
+```
+expense-tracker/
+├── backend/
 │   ├── controllers/
-│   ├── models/\n│   ├── routes/
+│   ├── models/
+│   ├── routes/
 │   ├── middleware/
-│   ├── utils/
-│   ├── config/
+│   ├── utils/\n│   ├── config/
 │   └── server.js
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   ├── pages/
-│   │   ├── context/
-│   │   ├── services/\n│   │   ├── utils/
+│   │   ├── pages/\n│   │   ├── context/
+│   │   ├── services/
+│   │   ├── utils/
 │   │   ├── styles/
 │   │   └── App.jsx
 │   └── vite.config.js
 └── package.json
 ```
-
-## 6. Environment Variables
-```
-MONGODB_URI=
-JWT_SECRET=
-JWT_REFRESH_SECRET=\nEMAIL_HOST=
+\n## 6. Environment Variables
+```\nMONGODB_URI=\nJWT_SECRET=
+JWT_REFRESH_SECRET=
+EMAIL_HOST=
 EMAIL_PORT=
 EMAIL_USER=
 EMAIL_PASS=
@@ -234,16 +229,12 @@ CLOUDINARY_URL=
 ```
 
 ## 7. Recommended Packages
-
-**Backend:**
-- express, mongoose, bcryptjs, jsonwebtoken
-- multer, cloudinary, nodemailer
-- pdfmake, exceljs, moment\n- cors, helmet, dotenv, express-rate-limit
-
-**Frontend:**
-- react, react-dom, react-router-dom
-- axios, formik, yup
-- chart.js, recharts, react-chartjs-2
+\n**Backend:**
+- express, mongoose, bcryptjs, jsonwebtoken\n- multer, cloudinary, nodemailer
+- pdfmake, exceljs, moment
+- cors, helmet, dotenv, express-rate-limit
+\n**Frontend:**
+- react, react-dom, react-router-dom\n- axios, formik, yup\n- chart.js, recharts, react-chartjs-2
 - @mui/material or tailwindcss
 - date-fns, react-hot-toast
 - file-saver, jsPDF, xlsx
@@ -257,17 +248,15 @@ CLOUDINARY_URL=
 6. Charts and visualizations
 7. Report generation (PDF/Excel)
 8. Email functionality
-9. User profile\n10. FD (Fixed Deposit) module
-11. Advanced features (budgets, goals)
-12. UI/UX optimization
-13. Testing and deployment
+9. User profile\n10. FD (Fixed Deposit) module with goal linkage
+11. Goals & Savings module with FD integration
+12. Advanced features (budgets, notifications)
+13. UI/UX optimization
+14. Testing and deployment
 
-## 9. Deployment Instructions\n- Backend: Deploy to Render/Railway/AWS
-- Frontend: Deploy to Vercel/Netlify
-- Database: MongoDB Atlas
-- File Storage: Cloudinary for image uploads
-
-## 10. Design Style
-- Color Scheme: Deep blue (#1976D2) as primary color, paired with light gray background (#F5F5F5) and white cards, green (#4CAF50) for income, red (#F44336) for expenses
-- Visual Details: 8px border radius, soft shadow effects (02px 8px rgba(0,0,0,0.1)), linear icon style, smooth hover transition animations
+## 9. Deployment Instructions
+- Backend: Deploy to Render/Railway/AWS
+- Frontend: Deploy to Vercel/Netlify\n- Database: MongoDB Atlas\n- File Storage: Cloudinary for image uploads
+\n## 10. Design Style\n- Color Scheme: Deep blue (#1976D2) as primary color, paired with light gray background (#F5F5F5) and white cards, green (#4CAF50) for income, red (#F44336) for expenses
+- Visual Details:8px border radius, soft shadow effects (02px 8px rgba(0,0,0,0.1)), linear icon style, smooth hover transition animations
 - Overall Layout: Card-based layout, dashboard uses grid system, fixed left sidebar navigation, adaptive content area, bottom navigation bar for mobile devices
