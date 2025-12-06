@@ -9,6 +9,7 @@ import Budgets from './pages/Budgets';
 import Goals from './pages/Goals';
 import FixedDeposits from './pages/FixedDeposits';
 import Reports from './pages/Reports';
+import FinancialPlanning from './pages/FinancialPlanning';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
@@ -104,6 +105,16 @@ const routes: RouteConfig[] = [
     element: (
       <ProtectedRoute>
         <Reports />
+      </ProtectedRoute>
+    ),
+    visible: true,
+  },
+  {
+    name: 'AI Planning',
+    path: '/financial-planning',
+    element: (
+      <ProtectedRoute>
+        <FinancialPlanning />
       </ProtectedRoute>
     ),
     visible: true,
