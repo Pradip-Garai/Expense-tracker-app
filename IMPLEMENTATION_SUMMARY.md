@@ -73,6 +73,7 @@ A comprehensive, production-ready expense tracking application built with modern
 - **Account Information**: View email and user details
 - **Name Update**: Change display name
 - **Monthly Budget Setting**: Set overall spending limit
+- **Theme Toggle**: Switch between light and dark mode
 - **Sign Out**: Secure logout functionality
 
 #### 9. Navigation
@@ -80,6 +81,7 @@ A comprehensive, production-ready expense tracking application built with modern
 - **Mobile Navigation**: Bottom navigation bar with icons
 - **Active Highlighting**: Current page clearly indicated
 - **Responsive Layout**: Seamless experience across devices
+- **Theme Toggle**: Quick access to dark/light mode (desktop sidebar)
 
 ### 🎨 UI/UX Features
 
@@ -102,6 +104,7 @@ A comprehensive, production-ready expense tracking application built with modern
 - **Confirmation Dialogs**: Prevent accidental deletions
 - **Empty States**: Helpful messages when no data exists
 - **Responsive Design**: Mobile-first approach with desktop optimization
+- **Dark/Light Mode**: Theme toggle with persistent preference storage
 
 ### 🗄️ Database Architecture
 

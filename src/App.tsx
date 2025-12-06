@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Sidebar from './components/layout/Sidebar';
 import MobileNav from './components/layout/MobileNav';
 import routes from './routes';
@@ -35,10 +36,12 @@ function AppContent() {
 const App: React.FC = () => {
   return (
     <Router>
-      <AuthProvider>
-        <Toaster position="top-right" richColors />
-        <AppContent />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Toaster position="top-right" richColors />
+          <AppContent />
+        </AuthProvider>
+      </ThemeProvider>
     </Router>
   );
 };

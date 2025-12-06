@@ -159,6 +159,22 @@ Manage your account:
 
 **Note**: Email cannot be changed for security reasons.
 
+#### Theme Toggle (Dark/Light Mode)
+
+Switch between light and dark themes:
+
+**Desktop:**
+- Click the sun/moon icon in the top-right corner of the sidebar
+- The theme will toggle instantly
+
+**Mobile:**
+- Go to the Profile page
+- Find the "Appearance" section
+- Toggle the Dark Mode switch
+- Your preference is saved automatically
+
+**Note**: Your theme preference is saved in your browser and will persist across sessions.
+
 #### Signing Out
 Click the "Sign Out" button at the bottom of the Profile page.
 

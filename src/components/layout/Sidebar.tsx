@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { LayoutDashboard, Receipt, BarChart3, Wallet, Target, Landmark, User } from 'lucide-react';
+import ThemeToggle from '@/components/common/ThemeToggle';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
@@ -18,8 +19,9 @@ export default function Sidebar() {
   return (
     <div className="hidden xl:flex xl:w-64 xl:flex-col xl:fixed xl:inset-y-0">
       <div className="flex flex-col flex-grow bg-card border-r border-border pt-5 pb-4 overflow-y-auto">
-        <div className="flex items-center flex-shrink-0 px-4">
+        <div className="flex items-center justify-between flex-shrink-0 px-4">
           <h1 className="text-2xl font-bold text-primary">Expense Tracker</h1>
+          <ThemeToggle />
         </div>
         <nav className="mt-8 flex-1 px-2 space-y-1">
           {navigation.map((item) => {
@@ -50,3 +52,4 @@ export default function Sidebar() {
     </div>
   );
 }
+

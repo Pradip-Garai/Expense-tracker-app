@@ -89,6 +89,7 @@ Building a comprehensive Expense Tracker application with authentication, transa
 - [x] Error handling
 - [x] Color scheme (income: green, expense: red)
 - [x] Consistent styling with shadcn/ui
+- [x] Dark/light mode toggle with persistent storage
 
 ### Phase 12: Testing & Validation ✅
 - [x] Run linting checks (all passed)
@@ -148,6 +149,7 @@ Building a comprehensive Expense Tracker application with authentication, transa
 ### Profile
 - User information display
 - Name and monthly budget editing
+- Dark/light theme toggle
 - Sign out functionality
 
 ### Navigation
@@ -155,6 +157,7 @@ Building a comprehensive Expense Tracker application with authentication, transa
 - Mobile: Bottom navigation bar
 - Active route highlighting
 - Responsive layout
+- Theme toggle button in sidebar
 
 ## Technical Stack
 - Frontend: React + TypeScript + Vite
