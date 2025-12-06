@@ -43,6 +43,7 @@ export default function Dashboard() {
   const statCards = [
     {
       title: 'Total Balance',
+      subtitle: 'All-time',
       value: stats.totalBalance,
       icon: Wallet,
       color: 'text-primary',
@@ -50,6 +51,7 @@ export default function Dashboard() {
     },
     {
       title: 'Total Income',
+      subtitle: 'This month',
       value: stats.totalIncome,
       icon: TrendingUp,
       color: 'text-income',
@@ -57,6 +59,7 @@ export default function Dashboard() {
     },
     {
       title: 'Total Expenses',
+      subtitle: 'This month',
       value: stats.totalExpenses,
       icon: TrendingDown,
       color: 'text-expense',
@@ -64,6 +67,7 @@ export default function Dashboard() {
     },
     {
       title: 'Savings Rate',
+      subtitle: 'This month',
       value: `${stats.savingsRate.toFixed(1)}%`,
       icon: PiggyBank,
       color: 'text-success',
@@ -103,9 +107,12 @@ export default function Dashboard() {
             statCards.map((stat, index) => (
               <Card key={index} className="hover:shadow-lg transition-shadow">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
-                    {stat.title}
-                  </CardTitle>
+                  <div>
+                    <CardTitle className="text-sm font-medium text-muted-foreground">
+                      {stat.title}
+                    </CardTitle>
+                    <p className="text-xs text-muted-foreground mt-1">{stat.subtitle}</p>
+                  </div>
                   <div className={`${stat.bgColor} p-2 rounded-full`}>
                     <stat.icon className={`h-4 w-4 ${stat.color}`} />
                   </div>

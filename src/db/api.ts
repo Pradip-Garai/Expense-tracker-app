@@ -205,28 +205,48 @@ export const transactionApi = {
     const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
     const endDate = new Date(year, month, 0).toISOString().split('T')[0];
 
-    const { data, error } = await supabase
+    // Get monthly transactions
+    const { data: monthlyData, error: monthlyError } = await supabase
       .from('transactions')
       .select('type, amount')
       .eq('user_id', userId)
       .gte('date', startDate)
       .lte('date', endDate);
 
-    if (error) throw error;
+    if (monthlyError) throw monthlyError;
 
-    const transactions = Array.isArray(data) ? data : [];
-    const income = transactions
+    // Get all-time transactions for total balance
+    const { data: allTimeData, error: allTimeError } = await supabase
+      .from('transactions')
+      .select('type, amount')
+      .eq('user_id', userId);
+
+    if (allTimeError) throw allTimeError;
+
+    const monthlyTransactions = Array.isArray(monthlyData) ? monthlyData : [];
+    const allTimeTransactions = Array.isArray(allTimeData) ? allTimeData : [];
+
+    // Calculate monthly income and expenses
+    const monthlyIncome = monthlyTransactions
       .filter(t => t.type === 'income')
       .reduce((sum, t) => sum + Number(t.amount), 0);
-    const expenses = transactions
+    const monthlyExpenses = monthlyTransactions
+      .filter(t => t.type === 'expense')
+      .reduce((sum, t) => sum + Number(t.amount), 0);
+
+    // Calculate all-time balance
+    const allTimeIncome = allTimeTransactions
+      .filter(t => t.type === 'income')
+      .reduce((sum, t) => sum + Number(t.amount), 0);
+    const allTimeExpenses = allTimeTransactions
       .filter(t => t.type === 'expense')
       .reduce((sum, t) => sum + Number(t.amount), 0);
 
     return {
-      totalIncome: income,
-      totalExpenses: expenses,
-      totalBalance: income - expenses,
-      savingsRate: income > 0 ? ((income - expenses) / income) * 100 : 0,
+      totalIncome: monthlyIncome,
+      totalExpenses: monthlyExpenses,
+      totalBalance: allTimeIncome - allTimeExpenses,
+      savingsRate: monthlyIncome > 0 ? ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100 : 0,
     };
   },
 
