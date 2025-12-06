@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Sidebar from './components/layout/Sidebar';
+import MobileHeader from './components/layout/MobileHeader';
 import MobileNav from './components/layout/MobileNav';
 import routes from './routes';
 
@@ -14,6 +15,7 @@ function AppContent() {
   return (
     <>
       {!isAuthPage && <Sidebar />}
+      {!isAuthPage && <MobileHeader />}
       <div className={!isAuthPage ? 'xl:pl-64' : ''}>
         <main className={!isAuthPage ? 'pb-20 xl:pb-0' : ''}>
           <Routes>
