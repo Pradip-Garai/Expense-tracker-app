@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCurrency, formatDate } from '@/utils/format';
-import { Plus, Edit, Trash2, Landmark, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, Minus, Edit, Trash2, Landmark, ChevronLeft, ChevronRight, ArrowDownCircle, ArrowUpCircle } from 'lucide-react';
 import type { FDDeposit } from '@/types';
 import FDDepositDialog from '@/components/fd/FDDepositDialog';
 import DeleteFDDepositDialog from '@/components/fd/DeleteFDDepositDialog';
@@ -18,6 +18,7 @@ export default function FixedDeposits() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showWithdrawDialog, setShowWithdrawDialog] = useState(false);
   const [editingDeposit, setEditingDeposit] = useState<FDDeposit | null>(null);
   const [deletingDeposit, setDeletingDeposit] = useState<FDDeposit | null>(null);
 
@@ -57,6 +58,7 @@ export default function FixedDeposits() {
     loadDeposits();
     loadTotalBalance();
     setShowAddDialog(false);
+    setShowWithdrawDialog(false);
     setEditingDeposit(null);
   };
 
@@ -74,10 +76,16 @@ export default function FixedDeposits() {
             <h1 className="text-3xl font-bold text-foreground">Fixed Deposits</h1>
             <p className="text-muted-foreground mt-1">Track your daily FD deposits and balance</p>
           </div>
-          <Button onClick={() => setShowAddDialog(true)}>
-            <Plus className="mr-2 h-4 w-4" />
-            Add Deposit
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={() => setShowWithdrawDialog(true)} variant="outline">
+              <Minus className="mr-2 h-4 w-4" />
+              Withdraw
+            </Button>
+            <Button onClick={() => setShowAddDialog(true)}>
+              <Plus className="mr-2 h-4 w-4" />
+              Add Deposit
+            </Button>
+          </div>
         </div>
 
         <Card>
@@ -129,12 +137,20 @@ export default function FixedDeposits() {
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-3">
-                          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <Landmark className="h-5 w-5 text-primary" />
+                          <div className={`h-10 w-10 rounded-full flex items-center justify-center ${
+                            deposit.transaction_type === 'deposit' 
+                              ? 'bg-success/10' 
+                              : 'bg-destructive/10'
+                          }`}>
+                            {deposit.transaction_type === 'deposit' ? (
+                              <ArrowDownCircle className="h-5 w-5 text-success" />
+                            ) : (
+                              <ArrowUpCircle className="h-5 w-5 text-destructive" />
+                            )}
                           </div>
                           <div>
                             <p className="font-medium">
-                              {deposit.description || 'FD Deposit'}
+                              {deposit.description || (deposit.transaction_type === 'deposit' ? 'FD Deposit' : 'FD Withdrawal')}
                             </p>
                             <p className="text-sm text-muted-foreground">
                               {formatDate(deposit.date)}
@@ -143,7 +159,11 @@ export default function FixedDeposits() {
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
-                        <Badge variant="default" className="bg-success">
+                        <Badge 
+                          variant={deposit.transaction_type === 'deposit' ? 'default' : 'destructive'}
+                          className={deposit.transaction_type === 'deposit' ? 'bg-success hover:bg-success/90' : ''}
+                        >
+                          {deposit.transaction_type === 'deposit' ? '+' : '-'}
                           {formatCurrency(Number(deposit.amount))}
                         </Badge>
                         <div className="flex gap-2">
@@ -202,6 +222,16 @@ export default function FixedDeposits() {
           }
         }}
         deposit={editingDeposit}
+        transactionType="deposit"
+        onSaved={handleDepositSaved}
+      />
+
+      <FDDepositDialog
+        open={showWithdrawDialog}
+        onOpenChange={(open) => {
+          if (!open) setShowWithdrawDialog(false);
+        }}
+        transactionType="withdrawal"
         onSaved={handleDepositSaved}
       />
 

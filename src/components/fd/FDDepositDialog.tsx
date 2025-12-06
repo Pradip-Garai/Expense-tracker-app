@@ -12,10 +12,17 @@ interface FDDepositDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   deposit?: FDDeposit | null;
+  transactionType?: 'deposit' | 'withdrawal';
   onSaved: () => void;
 }
 
-export default function FDDepositDialog({ open, onOpenChange, deposit, onSaved }: FDDepositDialogProps) {
+export default function FDDepositDialog({ 
+  open, 
+  onOpenChange, 
+  deposit, 
+  transactionType = 'deposit',
+  onSaved 
+}: FDDepositDialogProps) {
   const { user } = useAuth();
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
@@ -61,30 +68,45 @@ export default function FDDepositDialog({ open, onOpenChange, deposit, onSaved }
         amount: amountNum,
         date,
         description: description || null,
+        transaction_type: deposit?.transaction_type || transactionType,
       };
 
       if (deposit) {
         await fdDepositApi.updateDeposit(deposit.id, depositData);
-        toast.success('Deposit updated successfully');
+        toast.success(`${deposit.transaction_type === 'deposit' ? 'Deposit' : 'Withdrawal'} updated successfully`);
       } else {
         await fdDepositApi.createDeposit(depositData);
-        toast.success('Deposit added successfully');
+        toast.success(`${transactionType === 'deposit' ? 'Deposit' : 'Withdrawal'} added successfully`);
       }
 
       onSaved();
       onOpenChange(false);
     } catch (error: any) {
-      toast.error(error.message || 'Failed to save deposit');
+      toast.error(error.message || `Failed to save ${transactionType}`);
     } finally {
       setLoading(false);
     }
+  };
+
+  const getTitle = () => {
+    if (deposit) {
+      return deposit.transaction_type === 'deposit' ? 'Edit Deposit' : 'Edit Withdrawal';
+    }
+    return transactionType === 'deposit' ? 'Add Deposit' : 'Withdraw Funds';
+  };
+
+  const getPlaceholder = () => {
+    if (deposit) {
+      return deposit.transaction_type === 'deposit' ? 'e.g., Monthly deposit' : 'e.g., Emergency withdrawal';
+    }
+    return transactionType === 'deposit' ? 'e.g., Monthly deposit' : 'e.g., Emergency withdrawal';
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>{deposit ? 'Edit Deposit' : 'Add Deposit'}</DialogTitle>
+          <DialogTitle>{getTitle()}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -118,7 +140,7 @@ export default function FDDepositDialog({ open, onOpenChange, deposit, onSaved }
             <Input
               id="description"
               type="text"
-              placeholder="e.g., Monthly deposit"
+              placeholder={getPlaceholder()}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               disabled={loading}
@@ -130,7 +152,7 @@ export default function FDDepositDialog({ open, onOpenChange, deposit, onSaved }
               Cancel
             </Button>
             <Button type="submit" disabled={loading} className="flex-1">
-              {loading ? 'Saving...' : deposit ? 'Update' : 'Add'}
+              {loading ? 'Saving...' : deposit ? 'Update' : transactionType === 'deposit' ? 'Add' : 'Withdraw'}
             </Button>
           </div>
         </form>

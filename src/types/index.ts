@@ -82,6 +82,7 @@ export interface FDDeposit {
   amount: number;
   date: string;
   description: string | null;
+  transaction_type: 'deposit' | 'withdrawal';
   created_at: string;
   updated_at: string;
 }

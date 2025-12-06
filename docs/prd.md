@@ -11,8 +11,7 @@ Build a production-ready, beautifully designed Expense Tracker application using
 - Email verification during signup (optional but recommended)
 - Forgot password functionality with email reset link
 
-### 2.2 Dashboard\n- Summary cards showing:
-  - Total balance (income - expenses)
+### 2.2 Dashboard\n- Summary cards showing:\n  - Total balance (income - expenses)
   - Total income (current month)
   - Total expenses (current month)
   - Net savings rate
@@ -45,8 +44,7 @@ Build a production-ready, beautifully designed Expense Tracker application using
 - Use Chart.js or Recharts for visualizations
 
 **Report Generation:**
-- Generate PDF reports (using pdfmake or jsPDF)
-- Export to Excel/CSV (using xlsx library)
+- Generate PDF reports (using pdfmake or jsPDF)\n- Export to Excel/CSV (using xlsx library)
 - Custom date range selection for reports
 - Report types: monthly summary, category breakdown, cash flow\n
 **Email Reports:**
@@ -81,14 +79,19 @@ Build a production-ready, beautifully designed Expense Tracker application using
 - Email alerts for budget limits
 - Weekly spending summary\n\n### 2.7 FD (Fixed Deposit) Module
 - Daily deposit amount recording functionality
-- FD account balance display (total of all deposits)
-- Deposit history query with date and amount
-- Deposit statistics and trend analysis
-- Support for editing and deleting deposit records
+- **Withdrawal functionality with amount input and date selection**
+- **Withdrawal confirmation modal to prevent accidental withdrawals**
+- FD account balance display (total deposits minus total withdrawals)
+- Deposit and withdrawal history query with date, amount, and transaction type
+- **Transaction type indicator (Deposit/Withdrawal) with color coding (green for deposits, red for withdrawals)**
+- Deposit and withdrawal statistics and trend analysis
+- Support for editing and deleting deposit and withdrawal records
 - **Automatic linkage to Goals page**: When a deposit is added to FD, it automatically updates the 'Saved' amount in the linked saving goal on the Goals page
+- **Withdrawal impact on goals**: When a withdrawal is made, it automatically reduces the 'Saved' amount in the linked goal
 - FD deposits contribute to goal progress tracking (e.g., ₹20deposit in FD adds ₹20 to goal's saved amount)
-
-### 2.8 AI Financial Planning Agent
+- **Add Withdrawal button alongside Add Deposit button on FD page**
+- **Withdrawal form fields: amount, date, description (optional), linked goal (if applicable)**
+\n### 2.8 AI Financial Planning Agent
 **Core Functionality:**
 - Analyze user's long-term financial goals (car, house, flat, land purchase)
 - Connect user goals, investment data, and market reference data
@@ -102,8 +105,7 @@ Build a production-ready, beautifully designed Expense Tracker application using
 - FD interest rate and maturity date
 - Monthly saving contributions from transaction history
 - Existing savings and cash balance from dashboard
-
-**Market Data Estimation:**
+\n**Market Data Estimation:**
 - Current average price of the asset in selected area (estimated)
 - Expected yearly inflation or appreciation rate
 - Price range (minimum–maximum) for realistic scenarios
@@ -231,11 +233,11 @@ Build a production-ready, beautifully designed Expense Tracker application using
 }
 ```\n
 **FD Collection:**
-```javascript\n{
-  _id,\n  userId,
-  amount,
-  date,
-  description,
+```javascript
+{\n  _id,
+  userId,
+  amount,\n  date,
+  transactionType: ['deposit', 'withdrawal'],\n  description,
   linkedGoalId: ObjectId,
   createdAt
 }
@@ -264,6 +266,7 @@ Build a production-ready, beautifully designed Expense Tracker application using
 \n## 4. UI/UX Requirements
 - Clean, modern design with intuitive navigation
 - Dashboard with visual metrics\n- Color-coded transactions (red for expenses, green for income)
+- **Color-coded FD transactions (green for deposits, red for withdrawals)**
 - Responsive design for all devices
 - Loading animations and transitions
 - Accessible components (ARIA labels, keyboard navigation)
@@ -281,7 +284,8 @@ expense-tracker/
 │   ├── routes/
 │   ├── middleware/
 │   ├── utils/\n│   ├── services/
-│   │   └── aiFinancialPlanner.js\n│   ├── config/
+│   │   └── aiFinancialPlanner.js
+│   ├── config/
 │   └── server.js
 ├── frontend/
 │   ├── src/
@@ -326,7 +330,7 @@ CLOUDINARY_URL=
 6. Charts and visualizations
 7. Report generation (PDF/Excel)
 8. Email functionality
-9. User profile\n10. FD (Fixed Deposit) module with goal linkage
+9. User profile\n10. FD (Fixed Deposit) module with deposit and withdrawal functionality and goal linkage
 11. Goals & Savings module with FD integration
 12. **AI Financial Planning Agent (backend service + frontend interface)**
 13. Advanced features (budgets, notifications)\n14. UI/UX optimization
@@ -335,6 +339,6 @@ CLOUDINARY_URL=
 ## 9. Deployment Instructions
 - Backend: Deploy to Render/Railway/AWS
 - Frontend: Deploy to Vercel/Netlify\n- Database: MongoDB Atlas\n- File Storage: Cloudinary for image uploads
-\n## 10. Design Style\n- Color Scheme: Deep blue (#1976D2) as primary color, paired with light gray background (#F5F5F5) and white cards, green (#4CAF50) for income and achievable goals, red (#F44336) for expenses and unachievable goals, orange (#FF9800) for partially achievable goals
+\n## 10. Design Style\n- Color Scheme: Deep blue (#1976D2) as primary color, paired with light gray background (#F5F5F5) and white cards, green (#4CAF50) for income, deposits, and achievable goals, red (#F44336) for expenses, withdrawals, and unachievable goals, orange (#FF9800) for partially achievable goals
 - Visual Details:8px border radius, soft shadow effects (02px 8px rgba(0,0,0,0.1)), linear icon style, smooth hover transition animations, status badges with rounded corners
 - Overall Layout: Card-based layout, dashboard uses grid system, fixed left sidebar navigation, adaptive content area, bottom navigation bar for mobile devices, AI planning page uses vertical card stack with expandable sections

@@ -435,12 +435,15 @@ export const fdDepositApi = {
   async getTotalBalance(userId: string) {
     const { data, error } = await supabase
       .from('fd_deposits')
-      .select('amount')
+      .select('amount, transaction_type')
       .eq('user_id', userId);
 
     if (error) throw error;
-    const deposits = Array.isArray(data) ? data : [];
-    return deposits.reduce((sum, d) => sum + Number(d.amount), 0);
+    const transactions = Array.isArray(data) ? data : [];
+    return transactions.reduce((sum, t) => {
+      const amount = Number(t.amount);
+      return t.transaction_type === 'deposit' ? sum + amount : sum - amount;
+    }, 0);
   },
 
   async createDeposit(deposit: Omit<FDDeposit, 'id' | 'created_at' | 'updated_at'>) {
