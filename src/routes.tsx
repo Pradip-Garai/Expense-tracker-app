@@ -8,6 +8,7 @@ import Analytics from './pages/Analytics';
 import Budgets from './pages/Budgets';
 import Goals from './pages/Goals';
 import FixedDeposits from './pages/FixedDeposits';
+import Reports from './pages/Reports';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
@@ -93,6 +94,16 @@ const routes: RouteConfig[] = [
     element: (
       <ProtectedRoute>
         <FixedDeposits />
+      </ProtectedRoute>
+    ),
+    visible: true,
+  },
+  {
+    name: 'Reports',
+    path: '/reports',
+    element: (
+      <ProtectedRoute>
+        <Reports />
       </ProtectedRoute>
     ),
     visible: true,

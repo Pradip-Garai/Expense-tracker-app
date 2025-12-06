@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, Receipt, BarChart3, Wallet, Target, Landmark, User } from 'lucide-react';
+import { LayoutDashboard, Receipt, BarChart3, Wallet, Target, Landmark, FileText, User } from 'lucide-react';
 import ThemeToggle from '@/components/common/ThemeToggle';
 
 const navigation = [
@@ -10,6 +10,7 @@ const navigation = [
   { name: 'Budgets', href: '/budgets', icon: Wallet },
   { name: 'Goals', href: '/goals', icon: Target },
   { name: 'Fixed Deposits', href: '/fixed-deposits', icon: Landmark },
+  { name: 'Reports', href: '/reports', icon: FileText },
   { name: 'Profile', href: '/profile', icon: User },
 ];
 

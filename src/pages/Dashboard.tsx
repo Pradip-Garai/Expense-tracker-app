@@ -2,15 +2,18 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { transactionApi } from '@/db/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCurrency, getCurrentMonth, getCurrentYear } from '@/utils/format';
-import { Wallet, TrendingUp, TrendingDown, PiggyBank } from 'lucide-react';
+import { Wallet, TrendingUp, TrendingDown, PiggyBank, FileDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import RecentTransactions from '@/components/dashboard/RecentTransactions';
 import MonthlyTrendChart from '@/components/dashboard/MonthlyTrendChart';
 import QuickAddTransaction from '@/components/dashboard/QuickAddTransaction';
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [stats, setStats] = useState({
     totalBalance: 0,
     totalIncome: 0,
@@ -86,6 +89,10 @@ export default function Dashboard() {
               Welcome back! Here's your financial overview for this month.
             </p>
           </div>
+          <Button onClick={() => navigate('/reports')} variant="outline">
+            <FileDown className="mr-2 h-4 w-4" />
+            Generate Report
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
