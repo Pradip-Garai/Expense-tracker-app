@@ -1,5 +1,15 @@
-import SamplePage from './pages/SamplePage';
 import type { ReactNode } from 'react';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
+import Dashboard from './pages/Dashboard';
+import Transactions from './pages/Transactions';
+import Analytics from './pages/Analytics';
+import Budgets from './pages/Budgets';
+import Goals from './pages/Goals';
+import FixedDeposits from './pages/FixedDeposits';
+import Profile from './pages/Profile';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 interface RouteConfig {
   name: string;
@@ -10,10 +20,93 @@ interface RouteConfig {
 
 const routes: RouteConfig[] = [
   {
-    name: 'Sample Page',
+    name: 'Login',
+    path: '/login',
+    element: <Login />,
+    visible: false,
+  },
+  {
+    name: 'Signup',
+    path: '/signup',
+    element: <Signup />,
+    visible: false,
+  },
+  {
+    name: 'Forgot Password',
+    path: '/forgot-password',
+    element: <ForgotPassword />,
+    visible: false,
+  },
+  {
+    name: 'Dashboard',
     path: '/',
-    element: <SamplePage />
-  }
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
+    visible: true,
+  },
+  {
+    name: 'Transactions',
+    path: '/transactions',
+    element: (
+      <ProtectedRoute>
+        <Transactions />
+      </ProtectedRoute>
+    ),
+    visible: true,
+  },
+  {
+    name: 'Analytics',
+    path: '/analytics',
+    element: (
+      <ProtectedRoute>
+        <Analytics />
+      </ProtectedRoute>
+    ),
+    visible: true,
+  },
+  {
+    name: 'Budgets',
+    path: '/budgets',
+    element: (
+      <ProtectedRoute>
+        <Budgets />
+      </ProtectedRoute>
+    ),
+    visible: true,
+  },
+  {
+    name: 'Goals',
+    path: '/goals',
+    element: (
+      <ProtectedRoute>
+        <Goals />
+      </ProtectedRoute>
+    ),
+    visible: true,
+  },
+  {
+    name: 'Fixed Deposits',
+    path: '/fixed-deposits',
+    element: (
+      <ProtectedRoute>
+        <FixedDeposits />
+      </ProtectedRoute>
+    ),
+    visible: true,
+  },
+  {
+    name: 'Profile',
+    path: '/profile',
+    element: (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+    ),
+    visible: true,
+  },
 ];
 
 export default routes;

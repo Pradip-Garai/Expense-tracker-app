@@ -43,6 +43,18 @@ export default {
                     DEFAULT: 'hsl(var(--destructive))',
                     foreground: 'hsl(var(--destructive-foreground))'
                 },
+                success: {
+                    DEFAULT: 'hsl(var(--success))',
+                    foreground: 'hsl(var(--success-foreground))'
+                },
+                income: {
+                    DEFAULT: 'hsl(var(--income))',
+                    foreground: 'hsl(var(--income-foreground))'
+                },
+                expense: {
+                    DEFAULT: 'hsl(var(--expense))',
+                    foreground: 'hsl(var(--expense-foreground))'
+                },
                 muted: {
                     DEFAULT: 'hsl(var(--muted))',
                     foreground: 'hsl(var(--muted-foreground))'
@@ -59,13 +71,6 @@ export default {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))'
                 },
-                education: {
-                    blue: 'hsl(var(--education-blue))',
-                    green: 'hsl(var(--education-green))'
-                },
-                success: 'hsl(var(--success))',
-                warning: 'hsl(var(--warning))',
-                info: 'hsl(var(--info))',
                 sidebar: {
                     DEFAULT: 'hsl(var(--sidebar-background))',
                     foreground: 'hsl(var(--sidebar-foreground))',
