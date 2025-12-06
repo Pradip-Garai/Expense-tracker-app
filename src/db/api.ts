@@ -262,6 +262,39 @@ export const transactionApi = {
     if (error) throw error;
     return Array.isArray(data) ? data : [];
   },
+
+  async getYearlyTrend(userId: string, year: number) {
+    const startDate = `${year}-01-01`;
+    const endDate = `${year}-12-31`;
+
+    const { data, error } = await supabase
+      .from('transactions')
+      .select('type, amount, date')
+      .eq('user_id', userId)
+      .gte('date', startDate)
+      .lte('date', endDate)
+      .order('date', { ascending: true });
+
+    if (error) throw error;
+
+    const transactions = Array.isArray(data) ? data : [];
+    const monthlyData: Record<number, { income: number; expenses: number }> = {};
+
+    for (let month = 1; month <= 12; month++) {
+      monthlyData[month] = { income: 0, expenses: 0 };
+    }
+
+    transactions.forEach((transaction) => {
+      const month = new Date(transaction.date).getMonth() + 1;
+      if (transaction.type === 'income') {
+        monthlyData[month].income += transaction.amount;
+      } else {
+        monthlyData[month].expenses += transaction.amount;
+      }
+    });
+
+    return monthlyData;
+  },
 };
 
 // Budget API

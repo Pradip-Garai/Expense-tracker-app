@@ -21,18 +21,17 @@ export default function MonthlyTrendChart() {
     if (!user) return;
 
     try {
+      setLoading(true);
       const currentYear = getCurrentYear();
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const data = [];
-
-      for (let month = 1; month <= 12; month++) {
-        const stats = await transactionApi.getMonthlyStats(user.id, currentYear, month);
-        data.push({
-          month: months[month - 1],
-          income: stats.totalIncome,
-          expenses: stats.totalExpenses,
-        });
-      }
+      
+      const yearlyData = await transactionApi.getYearlyTrend(user.id, currentYear);
+      
+      const data = months.map((month, index) => ({
+        month,
+        income: yearlyData[index + 1]?.income || 0,
+        expenses: yearlyData[index + 1]?.expenses || 0,
+      }));
 
       setChartData(data);
     } catch (error) {
